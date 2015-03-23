@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.sample.dao.SlaveDao">
+
+	<select id="selectAdmin" parameterType="map" 
+		resultType="io.sample.bean.model.HadoopAdminModel">
+		SELECT
+			admin_id AS adminId,
+			admin_pwd AS adminPwd,
+			game_id AS gameId,
+			admin_name AS adminName,
+			admin_mail AS adminMail,
+			admin_status_flag AS adminStatusFlag,
+			insert_time AS insertTime,
+			update_time AS updateTime
+		FROM
+			sample_admin
+		WHERE
+			admin_id = #{adminId}
+	</select>
+
+	<select id="selectAdminList" parameterType="map" 
+		resultType="io.sample.bean.model.HadoopAdminModel">
+		SELECT
+			admin_id AS adminId,
+			admin_pwd AS adminPwd,
+			game_id AS gameId,
+			admin_name AS adminName,
+			admin_mail AS adminMail,
+			admin_status_flag AS adminStatusFlag,
+			insert_time AS insertTime,
+			update_time AS updateTime
+		FROM
+			sample_admin
+	</select>
+
+	<select id="selectGame" parameterType="map" 
+		resultType="io.sample.bean.model.HadoopGameModel">
+		SELECT
+			game_id AS gameId,
+			game_domain AS gameDomain,
+			game_title AS gameTitle,
+			game_explain AS gameExplain,
+			game_file AS gameFile,
+			game_status_flag AS gameStatusFlag,
+			insert_time AS insertTime,
+			update_time AS updateTime
+		FROM
+			sample_game
+		WHERE
+			game_id = #{gameId}
+	</select>
+
+	<select id="selectGameList" parameterType="map" 
+		resultType="io.sample.bean.model.HadoopGameModel">
+		SELECT
+			game_id AS gameId,
+			game_domain AS gameDomain,
+			game_title AS gameTitle,
+			game_explain AS gameExplain,
+			game_file AS gameFile,
+			game_status_flag AS gameStatusFlag,
+			insert_time AS insertTime,
+			update_time AS updateTime
+		FROM
+			sample_game
+	</select>
+
+	<select id="selectSequence" parameterType="map" resultType="java.lang.Long">
+		SELECT 
+			id 
+		FROM 
+			nr_sequence 
+		WHERE 
+			seq_name = #seqName#;
+	</select>
+
+</mapper>

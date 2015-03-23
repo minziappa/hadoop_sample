@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- ############ My SQL##################-->
+
+	<!-- Master DB-->
+	<bean id="hadoopMaster" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://${my.master.admin}:3306/sample_hadoop?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true" />
+        <property name="username" value="${mysql.id}" />
+        <property name="password" value="${mysql.pwd}" /> 
+		<!-- Pool Setting -->
+		<property name="maxActive" value="5" />
+		<property name="maxIdle" value="5" />
+		<property name="maxWait" value="10000" />
+		<property name="poolPreparedStatements" value="true"/>
+		<!-- Delete when it will release to real searvice -->
+        <property name="validationQuery" value="select 1"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="timeBetweenEvictionRunsMillis" value="7200000"/>
+    </bean>
+
+	<!-- Slave DB 00 -->
+	<bean id="hadoopSlave00" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://${my.slave.admin.00}:3306/sample_hadoop?useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true" />
+        <property name="username" value="${mysql.id}" />
+        <property name="password" value="${mysql.pwd}" />
+		<property name="maxActive" value="5" />
+		<property name="maxIdle" value="5" />
+		<property name="maxWait" value="10000" />
+        <property name="validationQuery" value="select 1"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="timeBetweenEvictionRunsMillis" value="7200000"/>
+    </bean>
+
+	<!-- Annotation Transaction
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="hadoopMaster" />
+	</bean>
+	<tx:annotation-driven transaction-manager="transactionManager" />
+ -->
+ 
+	<bean id="sqlSessionMasterFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="hadoopMaster" />  
+		<property name="configLocation" value="classpath:masterAdminMap.xml"/>
+		<!-- <property name="mapperLocations" value="classpath:sqlMap/masterAdminSql.xml" />  -->
+	</bean>
+
+<!-- Slave-->
+	<bean id="sqlSessionSlaveFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="hadoopSlave00" />
+		<property name="configLocation" value="classpath:slaveAdminMap.xml"/>
+		<!-- <property name="mapperLocations" value="classpath:sqlMap/slaveAdminSql.xml" />  -->
+	</bean>
+
+</beans>

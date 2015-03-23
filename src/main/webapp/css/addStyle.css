@@ -1,0 +1,170 @@
+
+/*
+Design by Kim
+*/
+
+#space {
+	margin: 10px 10px;
+	padding: 20px 30px 20px 30px;
+}
+
+#fieldset1 {
+	padding: 10px 10px 10px 10px;
+}
+
+/* For Graphic*/
+#fieldset2 {
+	background: none repeat scroll 0 0 #234252;
+	padding: 10px 10px 10px 10px;
+}
+
+div.submit {
+    text-align: left;
+    width:600px;
+}
+
+#cButton {
+	width:60pt;
+	height:20pt;
+	background-color:#566D7E;
+	color:white;
+}
+#top {
+	height: 20px;
+	position: relative;
+	padding: 0px;
+}
+
+#stg {
+    background: none repeat scroll 0 0 #A4A4A4;
+    line-height: 30px;
+    text-align: center;
+    color: white;
+    width: 980px;
+}
+#hon {
+    background: none repeat scroll 0 0 #FF0000;
+    line-height: 30px;
+    text-align: center;
+    color: white;
+    width: 980px;
+}
+
+/*
+Plugin Name: WP-Digg Style Paginator
+Plugin URI: http://www.mis-algoritmos.com/2007/09/09/wp-digg-style-pagination-plugin-v-10/
+Author: Victor De la Rocha
+Author URI: http://www.mis-algoritmos.com
+*/
+/*CSS Meneame style pagination*/
+
+	div.pagination {
+		padding: 3px;
+		margin: 3px;
+		text-align:center;
+		color:#ff6500;
+		font-size:80%;
+	}
+	div.pagination a {
+		border: 1px solid #ff9600;
+		margin-right:3px;
+		padding:5px 7px;
+
+		background-image:url(meneame.jpg);
+		background-position:bottom;
+		text-decoration: none;
+
+		color: #ff6500;		
+	}
+	div.pagination a:hover, div.meneame a:active {
+		border: 1px solid #ff9600;
+		background-image:none;
+		background-color:#ffc794;
+		color: #ff6500;
+	}
+	div.pagination span.current {
+		margin-right:3px;
+		padding:5px 7px;
+		border: 1px solid #ff6500;
+		
+		font-weight: bold;
+		background-color: #ffbe94;
+		color: #ff6500;
+	}
+	div.pagination span.disabled {
+		margin-right:3px;
+		padding:5px 7px;
+		border: 1px solid #ffe3c6;
+	
+		color: #ffe3c6;
+	}
+
+/* 
+	TagBox table styles
+	written by TagBox http://www.tagbox.de
+*/
+table.listing {
+  border-collapse: collapse;
+  border: 1px solid #03476F;
+  font: normal 11px verdana, arial, helvetica, sans-serif;
+  color: #363636;
+  background: #C2DFFF;
+  }
+table.listing caption {
+  text-align: center;
+  font: bold 18px arial, helvetica, sans-serif;
+  background: transparent;
+  padding:6px 4px 8px 0px;
+  color: #03476F;
+  text-transform: uppercase;
+  }
+table.listing td, th {
+  border: 1px dotted #03476F;
+  padding: .5em;
+  color: #363636;
+  }
+table.listing thead th, tfoot th {
+  font: bold 11px verdana, arial, helvetica, sans-serif;
+  border: 1px solid #03476F;;
+  text-align: left;
+  background: #4591AD;
+  color: #FFFFFF;
+  padding-top:3px;
+  }
+table.listing tbody td a {
+  background: transparent;
+  text-decoration: none;
+  color: #363636;
+  }
+table.listing tbody td a:hover {
+  background: #C2F64D;
+  color: #363636;
+  }
+table.listing tbody th a {
+  font: normal 11px verdana, arial, helvetica, sans-serif;
+  background: transparent;
+  text-decoration: none;
+  font-weight:normal;
+  color: #363636;
+  }
+table.listing tbody th a:hover {
+  background: transparent;
+  color: #363636;
+  }
+table.listing tbody th.listingÅ@{
+  vertical-align: top;
+  text-align: center;
+  }
+.odd {
+  background: #AEE239;
+  }
+table.listing tbody tr:hover {
+  background: #FFD800;
+  border: 1px solid #03476F;
+  color: #FFFFFF;
+  }
+table.listing tbody tr:hover th,
+table.listing tbody tr.odd:hover th {
+  background: #FFD800;
+  color: #FFFFFF;
+  }

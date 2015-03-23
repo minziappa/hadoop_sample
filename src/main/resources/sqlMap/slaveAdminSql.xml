@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.sample.dao.SlaveAdminDao">
+
+	<select id="selectApp" parameterType="map" 
+		resultType="io.sample.bean.model.HadoopAppModel">
+		SELECT
+			id AS adminId,
+			app_id AS appId,
+			app_name AS appName,
+			app_img AS appImg,
+			app_genre AS appGenre,
+			app_update AS appUpdate,
+			app_country AS appCountry,
+			app_ranking AS appRanking,
+			app_status_flag AS appStatusFlag,
+			insert_time AS insertTime,
+			update_time AS updateTime
+		FROM
+			new_test_app
+		WHERE
+			app_id = #{appId} AND
+			app_genre = #{appGenre}
+		ORDER BY 
+			insert_time DESC
+		LIMIT 1
+	</select>
+
+	<select id="selectAppAdminList" parameterType="map" 
+		resultType="io.sample.bean.model.HadoopAppAdminModel">
+		SELECT
+			id AS adminId,
+			admin_id AS adminId,
+			app_id AS appId,
+			app_admin_name AS appAdminName,
+			app_admin_img AS appAdminImg,
+			app_admin_genre AS appAdminGenre,
+			app_admin_status_flag AS appAdminStatusFlag,
+			insert_time AS insertTime,
+			update_time AS updateTime
+		FROM
+			sample_app_admin
+		WHERE
+			admin_id = #{adminId} AND
+			app_admin_genre = #{appAdminGenre} AND
+			app_admin_status_flag = #{appAdminStatusFlag}
+	</select>
+
+</mapper>

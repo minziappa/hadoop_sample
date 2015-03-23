@@ -1,0 +1,82 @@
+----------------------------------------------------------
+GRANT ALL PRIVILEGES ON hadoop_sample.* TO sampleUser@localhost IDENTIFIED BY 'sample';
+GRANT ALL PRIVILEGES ON hadoop_sample.* TO sampleUser@'171.0.%' IDENTIFIED BY 'sample';
+
+FLUSH PRIVILEGES;
+
+----------------------------------------------------------------
+
+CREATE TABLE sample_game 
+(
+    game_id VARCHAR(45) NOT NULL, 
+    game_domain VARCHAR(45) NULL,
+    game_title VARCHAR(45) NOT NULL,
+    game_explain VARCHAR(200) NULL,
+    game_file BLOB NOT NULL,
+    game_status_flag CHAR(1) NULL,
+    insert_time TIMESTAMP NOT NULL,
+    update_time TIMESTAMP NOT NULL,
+    PRIMARY KEY (game_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE INDEX sample_game_idx1 ON sample_game(game_title);
+CREATE INDEX sample_game_idx2 ON sample_game(insert_time);
+
+CREATE TABLE sample_admin
+(
+    admin_id VARCHAR(45) NOT NULL, 
+    admin_pwd VARCHAR(200) NULL,
+    game_id VARCHAR(45) NOT NULL,
+    admin_name VARCHAR(100) NULL,
+    admin_mail VARCHAR(100) NOT NULL,
+    admin_status_flag CHAR(1) NULL,
+    insert_time TIMESTAMP NOT NULL,
+    update_time TIMESTAMP NOT NULL,
+    PRIMARY KEY (admin_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+----------------------------------------------------------------
+
+CREATE TABLE nr_app 
+(
+    id BIGINT UNSIGNED NOT NULL DEFAULT '0',
+    app_id VARCHAR(45) NOT NULL, 
+    app_name VARCHAR(255) NULL, 
+    app_img VARCHAR(255) NULL, 
+    app_genre VARCHAR(45) NULL,
+    app_update VARCHAR(45) NULL,
+    app_country VARCHAR(45) NULL,
+    app_ranking VARCHAR(4) NULL,
+    app_status_flag CHAR(1) NULL,
+    insert_time TIMESTAMP NOT NULL,
+    update_time TIMESTAMP NOT NULL,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE INDEX nr_app_idx1 ON nr_app(app_id);
+CREATE INDEX nr_app_idx2 ON nr_app(insert_time);
+
+CREATE TABLE nr_sequence
+(
+	seq_name VARCHAR(30) NOT NULL,
+	id BIGINT UNSIGNED NOT NULL DEFAULT '0',
+	PRIMARY KEY (seq_name)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE sample_app_admin 
+(
+    id BIGINT UNSIGNED NOT NULL DEFAULT '0',
+    admin_id VARCHAR(45) NOT NULL, 
+    app_id VARCHAR(45) NULL,
+    app_admin_name VARCHAR(255) NULL,
+    app_admin_img VARCHAR(255) NULL,
+    app_admin_genre VARCHAR(100) NULL,
+    app_admin_status_flag CHAR(1) NULL,
+    insert_time TIMESTAMP NOT NULL,
+    update_time TIMESTAMP NOT NULL,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE INDEX sample_app_admin_idx1 ON sample_app_admin(admin_id);
+CREATE INDEX sample_app_admin_idx2 ON sample_app_admin(app_id);

@@ -1,0 +1,48 @@
+
+/*
+Design by Kim
+*/
+
+#box1 {
+	width:100px;
+	margin: 20px 20px 20px 20px;
+	background-color:#191970;
+	float: left;
+}
+
+#tableBox1 { 
+	width: 700px;
+	eight:75px;
+}
+
+#tableBox1 td {
+	border:1px solid black;
+	text-align: center;
+	height:100px;
+}
+
+#tableBox1 td:hover {
+  background: #87ABFF;
+  color: #FFDDC4;
+  }
+
+#tableBox2 { 
+	eight:75px;
+	text-decoration:none;
+}
+
+#tableBox2 td {
+	text-decoration:none;
+}
+
+#tdTitleBox {
+	background: #CECEF6;
+	border:1px solid black;
+	padding: 10px;
+	width: 700px;
+}
+
+#gray {
+    background: #D8D8D8;
+}
+
