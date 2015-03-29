@@ -1,12 +1,6 @@
-----------------------------------------------------------
-GRANT ALL PRIVILEGES ON sample_hadoop.* TO sampleNr@localhost IDENTIFIED BY 'skRtlgody';
-GRANT ALL PRIVILEGES ON sample_hadoop.* TO sampleNr@'10.200.%' IDENTIFIED BY 'skRtlgody';
 
-FLUSH PRIVILEGES;
 
-----------------------------------------------------------------
-
-CREATE TABLE sample_game 
+CREATE TABLE hadoop_game 
 (
     game_id VARCHAR(45) NOT NULL, 
     game_domain VARCHAR(45) NULL,
@@ -19,10 +13,10 @@ CREATE TABLE sample_game
     PRIMARY KEY (game_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE INDEX sample_game_idx1 ON sample_game(game_title);
-CREATE INDEX sample_game_idx2 ON sample_game(insert_time);
+CREATE INDEX hadoop_game_idx1 ON hadoop_game(game_title);
+CREATE INDEX hadoop_game_idx2 ON hadoop_game(insert_time);
 
-CREATE TABLE sample_admin
+CREATE TABLE hadoop_admin
 (
     admin_id VARCHAR(45) NOT NULL, 
     admin_pwd VARCHAR(200) NULL,
@@ -35,7 +29,9 @@ CREATE TABLE sample_admin
     PRIMARY KEY (admin_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-----------------------------------------------------------------
+
+
+
 
 CREATE TABLE nr_app 
 (
@@ -63,8 +59,7 @@ CREATE TABLE nr_sequence
 	PRIMARY KEY (seq_name)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
-CREATE TABLE sample_app_admin 
+CREATE TABLE hadoop_app_admin 
 (
     id BIGINT UNSIGNED NOT NULL DEFAULT '0',
     admin_id VARCHAR(45) NOT NULL, 
@@ -78,5 +73,5 @@ CREATE TABLE sample_app_admin
     PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE INDEX sample_app_admin_idx1 ON sample_app_admin(admin_id);
-CREATE INDEX sample_app_admin_idx2 ON sample_app_admin(app_id);
+CREATE INDEX hadoop_app_admin_idx1 ON hadoop_app_admin(admin_id);
+CREATE INDEX hadoop_app_admin_idx2 ON hadoop_app_admin(app_id);

@@ -11,6 +11,7 @@
 	<!-- Configures the @Controller programming model -->
 	
 	<mvc:resources location="classpath:/img/" mapping="/img/**"/>
+	<mvc:resources location="classpath:/imgages/" mapping="/images/**"/>
 	<mvc:resources location="classpath:/css/" mapping="/css/**"/>
 	<mvc:resources location="classpath:/js/" mapping="/js/**"/>
 

@@ -1,0 +1,9 @@
+CREATE DATABASE sample_hadoop;
+
+----------------------------------------------------------
+GRANT ALL PRIVILEGES ON sample_hadoop.* TO sample@localhost IDENTIFIED BY 'test';
+GRANT ALL PRIVILEGES ON sample_hadoop.* TO sample@'192.168.%' IDENTIFIED BY 'test';
+
+FLUSH PRIVILEGES;
+
+----------------------------------------------------------------
