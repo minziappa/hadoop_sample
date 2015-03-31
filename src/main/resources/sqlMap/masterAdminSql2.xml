@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.sample.dao.MasterAdminDao">
+
+	<statement id="createTableApp" parameterClass="java.util.Map">
+		CREATE TABLE app_uu_$appDb$ (
+			uu_id VARCHAR(128) NOT NULL, 
+			uu_nickname VARCHAR(45) NULL,
+			game_id VARCHAR(200) NULL,
+			uu_device_token CHAR(64) NULL,
+			uu_deny VARCHAR(50) NULL,
+			uu_status_flag CHAR(1) NULL,
+			insert_time TIMESTAMP NOT NULL,
+			update_time TIMESTAMP NOT NULL,
+			PRIMARY KEY (uu_id)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8
+	</statement>
+
+	<statement id="createIndexApp" parameterClass="java.util.Map">
+		CREATE INDEX apns_uu_idx1 ON apns_uu_$appDb$ (app_id)
+	</statement>
+
+	<statement id="createIndexDeny" parameterClass="java.util.Map">
+		CREATE INDEX apns_uu_idx2 ON apns_uu_$appDb$ (uu_deny)
+	</statement>
+
+	<insert id="insertAdmin" parameterType="map">
+		INSERT INTO sample_admin (
+			admin_id,
+			admin_pwd,
+			game_id,
+			admin_name,
+			admin_mail,
+			admin_status_flag,
+			insert_time,
+			update_time
+		) VALUES (
+			#{adminId},
+			#{adminPwd},
+			#{gameId},
+			#{adminName},
+			#{adminMail},
+			#{adminStatusFlag},
+			now(),
+			now()
+		)
+	</insert>
+<!-- 
+	<insert id="insertSequence" parameterType="map">
+		UPDATE 
+			sample_sequence 
+		SET 
+			id=LAST_INSERT_ID(id+1)
+		<selectKey resultType="Long">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+ -->
+
+	<insert id="insertGame" parameterType="map">
+		INSERT INTO sample_game (
+			game_id,
+			game_domain,
+			game_title,
+			game_explain,
+			game_file,
+			game_status_flag,
+			insert_time,
+			update_time
+		) VALUES (
+			#{gameId},
+			#{gameDomain},
+			#{gameTitle},
+			#{gameExplain},
+			#{gameFile},
+			#{gameStatusFlag},
+			now(),
+			now()
+		)
+	</insert>
+
+	<insert id="insertApp" parameterType="map">
+		<selectKey keyProperty="id" resultType="Long" order="BEFORE">
+			SELECT 
+				id 
+			FROM 
+				nr_sequence 
+			WHERE 
+				seq_name = #{seqName};
+		</selectKey>
+		INSERT INTO nr_app (
+			id,
+			app_id,
+			app_name,
+			app_img,
+			app_genre,
+			app_update,
+			app_country,
+			app_ranking,
+			app_status_flag,
+			insert_time,
+			update_time
+		) VALUES (
+			#{id},
+			#{appId},
+			#{appName},
+			#{appImg},
+			#{appGenre},
+			#{appUpdate},
+			#{appCountry},
+			#{appRanking},
+			#{appStatusFlag},
+			now(),
+			now()
+		)
+	</insert>
+
+	<insert id="insertAppAdmin" parameterType="map">
+		<selectKey keyProperty="id" resultType="Long" order="BEFORE">
+			SELECT 
+				id 
+			FROM 
+				nr_sequence 
+			WHERE 
+				seq_name = #{seqName};
+		</selectKey>
+		INSERT INTO sample_app_admin (
+			id,
+			admin_id,
+			app_id,
+			app_admin_name,
+			app_admin_img,
+			app_admin_genre,
+			app_admin_status_flag,
+			insert_time,
+			update_time
+		) VALUES (
+			#{id},
+			#{adminId},
+			#{appId},
+			#{appAdminName},
+			#{appAdminImg},
+			#{appAdminGenre},
+			#{appAdminStatusFlag},
+			now(),
+			now()
+		)
+	</insert>
+
+	<insert id="updateSequece" parameterType="map">
+		UPDATE 
+			nr_sequence 
+		SET 
+			id=LAST_INSERT_ID(id+1) 
+		WHERE 
+			seq_name = #{seqName}
+	</insert>
+
+	<update id="updateGame" parameterType="map">
+		UPDATE 
+			sample_game
+		SET
+			game_domain = #{gameDomain},
+			game_title = #{gameTitle},
+			game_explain = #{gameExplain},
+			game_file = #{gameFile},
+			game_status_flag = #{gameStatusFlag},
+			update_time = now()
+		WHERE
+			game_id = #{gameId}
+	</update>
+
+	<update id="updateAdmin" parameterType="map">
+		UPDATE 
+			sample_admin
+		SET
+			admin_pwd = #{adminPwd},
+			game_id = #{gameId},
+			admin_name = #{adminName},
+			admin_mail = #{adminMail},
+			admin_status_flag = #{adminStatusFlag},
+			update_time = now()
+		WHERE
+			admin_id = #{adminId} AND
+			game_id = #{gameId}
+	</update>
+
+	<update id="updateAppAdmin" parameterType="map">
+		UPDATE 
+			sample_app_admin
+		SET
+			app_admin_status_flag = #{appAdminStatusFlag},
+			update_time = now()
+		WHERE
+			admin_id = #{adminId} AND
+			app_id = #{appId} AND
+			app_admin_genre = #{appAdminGenre}
+	</update>
+
+</mapper>

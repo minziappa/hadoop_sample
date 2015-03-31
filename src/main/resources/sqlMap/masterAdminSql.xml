@@ -1,181 +1,225 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8" ?>
 
-<mapper namespace="io.sample.dao.MasterAdminDao">
+<!DOCTYPE sqlMap 
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
-	<insert id="insertAdmin" parameterType="map">
-		INSERT INTO sample_admin (
+<sqlMap namespace="masterAdmin">
+
+	<statement id="createTableApp" parameterClass="java.util.Map">
+		CREATE TABLE app_user_$appDb$ (
+			user_id VARCHAR(128) NOT NULL, 
+			user_nickname VARCHAR(45) NULL,
+			app_id VARCHAR(200) NULL,
+			user_device_token CHAR(64) NULL,
+			user_deny VARCHAR(50) NULL,
+			user_status_flag CHAR(1) NULL,
+			insert_time TIMESTAMP NOT NULL,
+			update_time TIMESTAMP NOT NULL,
+			PRIMARY KEY (user_id)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8
+	</statement>
+
+	<statement id="createIndexUser" parameterClass="java.util.Map">
+		CREATE INDEX app_user_idx1 ON app_user_$appDb$ (app_id)
+	</statement>
+
+	<statement id="createIndexDeny" parameterClass="java.util.Map">
+		CREATE INDEX app_user_idx2 ON app_user_$appDb$ (user_deny)
+	</statement>
+
+	<insert id="insertApp" parameterClass="java.util.Map">
+		INSERT INTO app_app (
+			app_id,
+			app_domain,
+			app_title,
+			app_explain,
+			app_token_password,
+			app_certificate_name,
+			app_certificate_file,
+			app_status_flag,
+			insert_time,
+			update_time
+		) VALUES (
+			#appId#,
+			#appDomain#,
+			#appTitle#,
+			#appExplain#,
+			#appTokenPassword#,
+			#appCertificateName#,
+			#appCertificateFile#,
+			#appStatusFlag#,
+			now(),
+			now()
+		)
+	</insert>
+
+	<insert id="insertAdmin" parameterClass="java.util.Map">
+		INSERT INTO app_admin (
 			admin_id,
 			admin_pwd,
-			game_id,
+			app_id,
 			admin_name,
 			admin_mail,
 			admin_status_flag,
 			insert_time,
 			update_time
 		) VALUES (
-			#{adminId},
-			#{adminPwd},
-			#{gameId},
-			#{adminName},
-			#{adminMail},
-			#{adminStatusFlag},
+			#adminId#,
+			#adminPwd#,
+			#appId#,
+			#adminName#,
+			#adminMail#,
+			#adminStatusFlag#,
 			now(),
 			now()
 		)
 	</insert>
-<!-- 
-	<insert id="insertSequence" parameterType="map">
+
+	<insert id="insertHistory" parameterClass="java.util.Map">
+		INSERT INTO app_history (
+			history_id,
+			history_send_time,
+			app_id,
+			admin_id,
+			admin_name,
+			history_message,
+			history_user_id,
+			history_kind_flag,
+			history_sand_box_flag,
+			history_status_flag,
+			insert_time,
+			update_time
+		) VALUES (
+			#historyId#,
+			now(),
+			#appId#,
+			#adminId#,
+			#adminName#,
+			#historyMessage#,
+			#historyUserId#,
+			#historyKindFlag#,
+			#historySandBoxFlag#,
+			#historyStatusFlag#,
+			now(),
+			now()
+		)
+	</insert>
+
+	<insert id="insertBook" parameterClass="java.util.Map">
+		INSERT INTO app_book (
+			app_id,
+			admin_id,
+			book_name,
+			book_time,
+			book_thread,
+			book_sandbox,
+			book_badge,
+			book_sound,
+			book_message,
+			book_status_flag,
+			insert_time,
+			update_time
+		) VALUES (
+			#appId#,
+			#adminId#,
+			#bookName#,
+			#bookTime#,
+			#bookThread#,
+			#bookSandbox#,
+			#bookBadge#,
+			#bookSound#,
+			#bookMessage#,
+			#bookStatusFlag#,
+			now(),
+			now()
+		)
+	</insert>
+
+	<insert id="insertSequence" parameterClass="java.util.Map">
 		UPDATE 
-			sample_sequence 
+			app_sequence 
 		SET 
 			id=LAST_INSERT_ID(id+1)
-		<selectKey resultType="Long">
+		<selectKey resultClass="Long">
 			SELECT LAST_INSERT_ID()
 		</selectKey>
 	</insert>
- -->
 
-	<insert id="insertGame" parameterType="map">
-		INSERT INTO sample_game (
-			game_id,
-			game_domain,
-			game_title,
-			game_explain,
-			game_file,
-			game_status_flag,
-			insert_time,
-			update_time
-		) VALUES (
-			#{gameId},
-			#{gameDomain},
-			#{gameTitle},
-			#{gameExplain},
-			#{gameFile},
-			#{gameStatusFlag},
-			now(),
-			now()
-		)
-	</insert>
-
-	<insert id="insertApp" parameterType="map">
-		<selectKey keyProperty="id" resultType="Long" order="BEFORE">
-			SELECT 
-				id 
-			FROM 
-				nr_sequence 
-			WHERE 
-				seq_name = #{seqName};
-		</selectKey>
-		INSERT INTO nr_app (
-			id,
-			app_id,
-			app_name,
-			app_img,
-			app_genre,
-			app_update,
-			app_country,
-			app_ranking,
-			app_status_flag,
-			insert_time,
-			update_time
-		) VALUES (
-			#{id},
-			#{appId},
-			#{appName},
-			#{appImg},
-			#{appGenre},
-			#{appUpdate},
-			#{appCountry},
-			#{appRanking},
-			#{appStatusFlag},
-			now(),
-			now()
-		)
-	</insert>
-
-	<insert id="insertAppAdmin" parameterType="map">
-		<selectKey keyProperty="id" resultType="Long" order="BEFORE">
-			SELECT 
-				id 
-			FROM 
-				nr_sequence 
-			WHERE 
-				seq_name = #{seqName};
-		</selectKey>
-		INSERT INTO sample_app_admin (
-			id,
-			admin_id,
-			app_id,
-			app_admin_name,
-			app_admin_img,
-			app_admin_genre,
-			app_admin_status_flag,
-			insert_time,
-			update_time
-		) VALUES (
-			#{id},
-			#{adminId},
-			#{appId},
-			#{appAdminName},
-			#{appAdminImg},
-			#{appAdminGenre},
-			#{appAdminStatusFlag},
-			now(),
-			now()
-		)
-	</insert>
-
-	<insert id="updateSequece" parameterType="map">
+	<update id="updateApp" parameterClass="java.util.Map">
 		UPDATE 
-			nr_sequence 
-		SET 
-			id=LAST_INSERT_ID(id+1) 
-		WHERE 
-			seq_name = #{seqName}
-	</insert>
-
-	<update id="updateGame" parameterType="map">
-		UPDATE 
-			sample_game
+			app_app
 		SET
-			game_domain = #{gameDomain},
-			game_title = #{gameTitle},
-			game_explain = #{gameExplain},
-			game_file = #{gameFile},
-			game_status_flag = #{gameStatusFlag},
+			app_domain = #appDomain#,
+			app_title = #appTitle#,
+			app_explain = #appExplain#,
+			app_token_password = #appTokenPassword#,
+			app_certificate_name = #appCertificateName#,
+			app_certificate_file = #appCertificateFile#,
+			app_status_flag = #appStatusFlag#,
 			update_time = now()
 		WHERE
-			game_id = #{gameId}
+			app_id = #appId#
 	</update>
 
-	<update id="updateAdmin" parameterType="map">
+	<update id="updateAdmin" parameterClass="java.util.Map">
 		UPDATE 
-			sample_admin
+			app_admin
 		SET
-			admin_pwd = #{adminPwd},
-			game_id = #{gameId},
-			admin_name = #{adminName},
-			admin_mail = #{adminMail},
-			admin_status_flag = #{adminStatusFlag},
+			admin_pwd = #adminPwd#,
+			app_id = #appId#,
+			admin_name = #adminName#,
+			admin_mail = #adminMail#,
+			admin_status_flag = #adminStatusFlag#,
 			update_time = now()
 		WHERE
-			admin_id = #{adminId} AND
-			game_id = #{gameId}
+			admin_id = #adminId# AND
+			app_id = #appId#
 	</update>
 
-	<update id="updateAppAdmin" parameterType="map">
+	<update id="updateHistoryErrorCnt" parameterClass="java.util.Map">
 		UPDATE 
-			sample_app_admin
+			app_history
 		SET
-			app_admin_status_flag = #{appAdminStatusFlag},
+			history_error_flag = #historyErrorFlag#,
+			history_error_cnt = #historyErrorCnt#,
 			update_time = now()
 		WHERE
-			admin_id = #{adminId} AND
-			app_id = #{appId} AND
-			app_admin_genre = #{appAdminGenre}
+			history_id = #historyId#
 	</update>
 
-</mapper>
+	<update id="updateHistoryStatus" parameterClass="java.util.Map">
+		UPDATE 
+			app_history
+		SET
+			history_status_flag = #historyStatusFlag#,
+			update_time = now()
+		WHERE
+			history_id = #historyId#
+	</update>
+
+	<update id="updateBookStatus" parameterClass="java.util.Map">
+		UPDATE 
+			app_book
+		SET
+			book_status_flag = #bookStatusFlag#,
+			update_time = now()
+		WHERE
+			book_id = #bookId#
+	</update>
+
+	<statement id="updateUserResolveList" parameterClass="java.util.Map">
+		UPDATE 
+			app_user_$appDb$
+		SET
+			user_deny = #userDeny#,
+			update_time = now()
+		WHERE
+			user_id IN
+			<iterate property="userIdList" open="(" conjunction="," close=")">
+				<![CDATA[#userIdList[]#]]>
+			</iterate> 
+			AND user_deny = '0'
+	</statement>
+
+</sqlMap>
