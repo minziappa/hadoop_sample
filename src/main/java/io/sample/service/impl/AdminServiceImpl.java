@@ -38,9 +38,6 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
-
 @Service
 public class AdminServiceImpl implements AdminService {
 
@@ -55,6 +52,25 @@ public class AdminServiceImpl implements AdminService {
 	@Autowired
 	private SqlSession slaveAdminDao;
 
+	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+	@Override
+	public boolean createTable(RegisterGamePara registerGamePara) throws Exception {
+
+		Map<String, Object> mapCreateGame = new HashMap<String, Object>();
+		mapCreateGame.put("gameDb", registerGamePara.getGameId());
+
+		try {
+			masterAdminDao.getMapper(MasterAdminDao.class).createTableGame(mapCreateGame);
+			masterAdminDao.getMapper(MasterAdminDao.class).createIndexUu(mapCreateGame);
+			masterAdminDao.getMapper(MasterAdminDao.class).createIndexDeny(mapCreateGame);
+		} catch (Exception e) {
+			logger.error("Exception error", e);
+		}
+
+		return true;
+	}
+
+	
 	@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
 	@Override
 	public boolean insertGame(RegisterGamePara registerGamePara) throws Exception {

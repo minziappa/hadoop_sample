@@ -10,6 +10,8 @@ import java.util.List;
 
 public interface AdminService {
 
+	boolean createTable(RegisterGamePara registerGamePara) throws Exception;
+	
 	public boolean insertGame(RegisterGamePara registerGamePara) throws Exception;
 	public HadoopGameModel selectGame(String gameId) throws Exception;
 	public List<HadoopGameModel> selectGameList() throws Exception;
@@ -21,5 +23,6 @@ public interface AdminService {
 	public boolean updateAdmin(RegisterAdminPara registerAdminPara) throws Exception;
 
 	public ChargeModel getChargeSum() throws Exception;
+
 
 }

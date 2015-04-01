@@ -5,4 +5,22 @@
 		<cnt>2</cnt>
 	</slavedb>
 
+	<system>
+		<environment>Staging</environment>
+	</system>
+
+	<hdfs>
+		<url>hdfs://hadoop01:9000</url>
+		<path>/home/hadoop/data/flume</path>
+	</hdfs>
+
+	<hbase>
+		<master>hadoop01:6000</master>
+		<zookeeper>
+			<quorum>hadoop01</quorum>
+			<property>
+				<clientPort>2181</clientPort>
+			</property>
+		</zookeeper>
+	</hbase>
 </config>
