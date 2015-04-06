@@ -94,3 +94,18 @@ uploadArchives {
        }
     }
 }
+
+// Copy a war file to the webapp in Tomcat
+// $ gradle warCopy  
+//war {
+//	war.archiveName "ROOT.war"
+//}
+//task deployWar << {
+//	copy {
+//		from 'build/libs/ROOT.war'
+//		into '/Users/kim_woongjoon/tomcat/webapps'
+//		include '**/*.war'
+//	}
+//}
+//warCopy.dependsOn(war)
+
