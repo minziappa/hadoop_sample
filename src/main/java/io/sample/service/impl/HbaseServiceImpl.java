@@ -21,9 +21,9 @@ import io.sample.bean.model.HadoopAppModel;
 import io.sample.dao.HBaseDAO;
 import io.sample.dao.MasterAdminDao;
 import io.sample.dao.SlaveAdminDao;
-import io.sample.http.ApiHttpClient;
 import io.sample.service.HbaseService;
-import io.sample.utility.DateUtility;
+import io.utility.http.ApiHttpClient;
+import io.utility.utile.DateUtility;
 
 import java.io.StringReader;
 import java.text.DateFormat;

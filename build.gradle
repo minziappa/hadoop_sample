@@ -53,7 +53,7 @@ dependencies {
 	compile "org.mybatis:mybatis-spring:1.2.0"
 	compile "org.freemarker:freemarker:2.3.17"
 	compile "com.googlecode.json-simple:json-simple:1.1.1"
-	compile "io.utility:utility:0.3"
+	compile "io.utility:utility:0.5"
 	compile "io.paging:paging:0.1"
 	provided "org.apache.tomcat:servlet-api:6.0.33"
     testCompile "junit:junit:4.+"

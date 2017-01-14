@@ -6,7 +6,7 @@
 	</slavedb>
 
 	<system>
-		<environment>Staging</environment>
+		<environment>Develop</environment>
 	</system>
 
 	<hdfs>
@@ -17,7 +17,7 @@
 	<hbase>
 		<master>hadoop01:6000</master>
 		<zookeeper>
-			<quorum>hadoop01</quorum>
+			<quorum>hadoop02</quorum>
 			<property>
 				<clientPort>2181</clientPort>
 			</property>
